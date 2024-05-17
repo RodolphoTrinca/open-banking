@@ -9,12 +9,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["OpenBanking.API.csproj", "OpenBanking.API/"]
+COPY ["OpenBanking.API/OpenBanking.API.csproj", "OpenBanking.API/"]
 COPY ["OpenBanking.Infra/OpenBanking.Infra.csproj", "OpenBanking.Infra/"]
 COPY ["OpenBanking.Application/OpenBanking.Application.csproj", "OpenBanking.Application/"]
 RUN dotnet restore "./OpenBanking.API/OpenBanking.API.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/OpenBanking.API"
 RUN dotnet build "./OpenBanking.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

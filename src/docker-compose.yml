@@ -1,0 +1,46 @@
+version: "3.8"
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  openbanking.api.web:
+    image: openbankingwebapi
+    container_name: openbanking.api.web
+    build:
+      context: .
+      dockerfile: OpenBanking.API/Dockerfile
+    ports:
+      - "5100:8080"
+    networks:
+      - mynetwork
+
+  # openbanking.ui.web:
+  #   image: openbankinguiweb
+  #   container_name: openbanking.ui.web
+  #   build:
+  #     context: ./OpenBanking.UI
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./OpenBanking.UI:/app
+  #     - /app/node_modules
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #   networks:
+  #     - mynetwork
+
+  openbanking.reverse.proxy:
+    image: openbanking.reverse.proxy
+    container_name: openbanking.reverse.proxy
+    build:
+      context: .
+      dockerfile: OpenBanking.Infra/NGINX/Dockerfile
+    ports:
+      - "10000:80"
+    depends_on:
+      - "openbanking.api.web"
+      # - "openbanking.ui.web"
+    networks:
+      - mynetwork

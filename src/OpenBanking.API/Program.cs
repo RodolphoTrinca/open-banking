@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
+using OpenBanking.Application.Interfaces;
+using OpenBanking.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,9 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Open banking API",
     });
 });
+
+//Setup dependencies
+builder.Services.AddScoped<IParticipantsService, ParticipantsService>();
 
 var app = builder.Build();
 
