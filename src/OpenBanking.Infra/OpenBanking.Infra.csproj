@@ -6,9 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Context\" />
-    <Folder Include="Repository\" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="MongoDB.Bson" Version="2.25.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.0.1" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.json" Version="8.0.0" />
+	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\OpenBanking.Application\OpenBanking.Application.csproj" />
+	</ItemGroup>
+	
 </Project>

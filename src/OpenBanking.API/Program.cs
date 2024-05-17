@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
 using OpenBanking.Application.Interfaces;
 using OpenBanking.Application.Services;
+using Microsoft.EntityFrameworkCore;
+using OpenBanking.Infra.Context;
+using OpenBanking.Infra.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Setup mongo db
+var dataBaseSettings = builder.Configuration.GetSection("OpenBankingStoreDatabase").Get<OpenBankingDatabaseSettings>();
+
+if (dataBaseSettings == null)
+{
+    Console.WriteLine("Error to retrive databaseSettings from appsettings.json");
+    Environment.Exit(1);
+}
+
+builder.Services.Configure<OpenBankingDatabaseSettings>(builder.Configuration.GetSection("OpenBankingStoreDatabase"));
+builder.Services.AddDbContext<OpenBankingDbContext>(options =>
+{
+    options.UseMongoDB(dataBaseSettings.ConnectionString ?? "", dataBaseSettings.DatabaseName ?? "");
+});
 
 //Setup SeriLog
 builder.Host.UseSerilog((context, configuration) =>
@@ -38,6 +56,7 @@ builder.Services.AddSwaggerGen(c =>
 
 //Setup dependencies
 builder.Services.AddScoped<IParticipantsService, ParticipantsService>();
+builder.Services.AddScoped<IBankDataRepository, BankDataRepository>();
 
 var app = builder.Build();
 

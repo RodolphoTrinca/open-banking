@@ -5,12 +5,24 @@ networks:
     driver: bridge
 
 services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+     - 27017:27017
+    networks:
+      - mynetwork
+    volumes:
+      - dbdata6:/data/db
+
   openbanking.api.web:
     image: openbankingwebapi
     container_name: openbanking.api.web
     build:
       context: .
       dockerfile: OpenBanking.API/Dockerfile
+    depends_on:
+      - mongo
     ports:
       - "5100:8080"
     networks:
@@ -44,3 +56,6 @@ services:
       # - "openbanking.ui.web"
     networks:
       - mynetwork
+
+volumes:
+  dbdata6:
