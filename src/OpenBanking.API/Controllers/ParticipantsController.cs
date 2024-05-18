@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OpenBanking.API.DTO;
 using OpenBanking.Application.Interfaces;
 
 namespace OpenBanking.API.Web.Controllers
@@ -33,7 +34,9 @@ namespace OpenBanking.API.Web.Controllers
                     return NotFound();
                 }
 
-                return Ok(listBanks);
+                var dto = new ParticipantsDTO(listBanks);
+
+                return Ok(dto);
             }
             catch (Exception ex)
             {
