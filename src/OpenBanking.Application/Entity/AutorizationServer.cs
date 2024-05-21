@@ -4,7 +4,7 @@ namespace OpenBanking.Application.Entity
     public class AutorizationServer : IEquatable<AutorizationServer?>
     {
         public string? LogoURI { get; set; }
-        public string? ConfigurarionURL { get; set; }
+        public string? configurationURL { get; set; }
         public string? DiscoveryAuthorization { get; set; }
 
         public override bool Equals(object? obj)
@@ -16,13 +16,13 @@ namespace OpenBanking.Application.Entity
         {
             return other is not null &&
                    LogoURI == other.LogoURI &&
-                   ConfigurarionURL == other.ConfigurarionURL &&
+                   configurationURL == other.configurationURL &&
                    DiscoveryAuthorization == other.DiscoveryAuthorization;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(LogoURI, ConfigurarionURL, DiscoveryAuthorization);
+            return HashCode.Combine(LogoURI, configurationURL, DiscoveryAuthorization);
         }
 
         public static bool operator ==(AutorizationServer? left, AutorizationServer? right)

@@ -30,7 +30,7 @@ namespace OpenBanking.Tests.Helpers
         {
             return new AutorizationServer()
             {
-                ConfigurarionURL = _configurationURL,
+                configurationURL = _configurationURL,
                 DiscoveryAuthorization = _discoveryAuthorization,
                 LogoURI = _logoURI
             };

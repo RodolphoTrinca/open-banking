@@ -13,7 +13,7 @@ namespace OpenBanking.Worker.DTO
         {
             return new AutorizationServer
             {
-                ConfigurarionURL = OpenIDDiscoveryDocument,
+                configurationURL = OpenIDDiscoveryDocument,
                 DiscoveryAuthorization = AuthorisationServerId,
                 LogoURI = CustomerFriendlyLogoUri
             };
