@@ -20,9 +20,9 @@ namespace OpenBanking.API.Web.Controllers
 
         //GET api/participants
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ParticipantsDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get([FromQuery] int skip = 0, [FromQuery] int take = 100)
         {
             try
