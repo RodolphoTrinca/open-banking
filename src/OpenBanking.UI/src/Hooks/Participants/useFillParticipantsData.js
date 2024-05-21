@@ -3,16 +3,16 @@ export const useFillParticipantsData = () => {
       if(!data){
         return [];
       }
-      
-      const dataArray = data.map((item) => {
+
+      const dataArray = data.participants.map((item) => {
           return {
             id: item.organizationId,
             status: item.status,
             name: item.name,
             autorizationServers: {
-                logoURI: item.autorizationServers.logoURI,
-                configurationURL: item.autorizationServers.configurationURL,
-                discoveryAuthorization: item.autorizationServers.discoveryAuthorization     
+                logoURI: item.autorizationServers[0].logoURI,
+                configurationURL: item.autorizationServers[0].configurationURL,
+                discoveryAuthorization: item.autorizationServers[0].discoveryAuthorization     
             }
           };
         });

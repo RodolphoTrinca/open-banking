@@ -30,20 +30,20 @@ services:
     networks:
       - mynetwork
 
-  # openbanking.ui.web:
-  #   image: openbankinguiweb
-  #   container_name: openbanking.ui.web
-  #   build:
-  #     context: ./OpenBanking.UI
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./OpenBanking.UI:/app
-  #     - /app/node_modules
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #   networks:
-  #     - mynetwork
+  openbanking.ui.web:
+    image: openbankinguiweb
+    container_name: openbanking.ui.web
+    build:
+      context: ./OpenBanking.UI
+    ports:
+      - "3000:8080"
+    volumes:
+      - ./OpenBanking.UI:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - mynetwork
 
   openbanking.reverse.proxy:
     image: openbanking.reverse.proxy
@@ -55,7 +55,7 @@ services:
       - "10000:80"
     depends_on:
       - "openbanking.api.web"
-      # - "openbanking.ui.web"
+      - "openbanking.ui.web"
     networks:
       - mynetwork
   

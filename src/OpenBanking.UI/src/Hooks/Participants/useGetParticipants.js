@@ -1,9 +1,9 @@
 import { useAxios } from "../Axios/useAxios";
 import axios from "../../Apis/openBanking"
-import { useFillIncomeData } from './useFillIncomeData';
+import { useFillParticipantsData } from './useFillParticipantsData';
 
-export const useGetIncomes = () => {
-    const [fillData] = useFillIncomeData();
+export const useGetParticipants = () => {
+    const [fillData] = useFillParticipantsData();
     const [response, error, loading, fetch] = useAxios({
         axiosInstance: axios,
         method: 'GET',

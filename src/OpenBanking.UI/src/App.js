@@ -1,6 +1,7 @@
 import { Box, Container, Table } from '@mui/material';
 import './App.css';
 import DrawerAppBar from './components/NavBar/DrawerAppBar';
+import Participants from './components/Participants/Participants';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <DrawerAppBar/>
       <Box component="main" sx={{ p: 6 }}>
         <Container>
-          <Table/>
+          <Participants/>
         </Container>
       </Box>
     </main>
