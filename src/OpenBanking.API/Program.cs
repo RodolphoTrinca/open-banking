@@ -55,7 +55,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Setup dependencies
-builder.Services.AddScoped<IParticipantsService, ParticipantsService>();
+builder.Services.AddScoped<IBankDataService, BankDataService>();
 builder.Services.AddScoped<IBankDataRepository, BankDataRepository>();
 
 var app = builder.Build();

@@ -9,16 +9,16 @@ namespace OpenBanking.Tests.Helpers
     {
         protected ParticipantsController _controller;
         protected ILogger<ParticipantsController> _logger;
-        protected IParticipantsService _participantsService;
+        protected IBankDataService _participantsService;
 
         public ParticipantsControllerBase() {
             _controller = CreateParticipantsController();
         }
 
-        protected ParticipantsController CreateParticipantsController(IParticipantsService participantsService = null, ILogger<ParticipantsController> logger = null)
+        protected ParticipantsController CreateParticipantsController(IBankDataService participantsService = null, ILogger<ParticipantsController> logger = null)
         {
             _logger = logger ?? Substitute.For<ILogger<ParticipantsController>>();
-            _participantsService = participantsService ?? Substitute.For<IParticipantsService>();
+            _participantsService = participantsService ?? Substitute.For<IBankDataService>();
 
             return new ParticipantsController(_participantsService, _logger);
         }

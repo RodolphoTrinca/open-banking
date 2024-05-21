@@ -17,16 +17,38 @@ namespace OpenBanking.Infra.Repository
             _logger = logger;
         }
 
+        public BankData? GetOrganizationById(Guid id)
+        {
+            return _context.BankData.FirstOrDefault(k => k.OrganizationId == id);
+        }
+
         public BankData? GetById(ObjectId id)
         {
             return _context.BankData.FirstOrDefault(k => k.Id == id);
         }
 
-        public IEnumerable<BankData> GetAll(int skip = 0, int take = 10)
+        public IEnumerable<BankData> GetAll(int? skip = null, int? take = null)
+        {
+            var query = from bankData in _context.BankData
+                        select bankData;
+
+            if (skip != null)
+            {
+                query.Skip(skip.Value);
+            }
+
+            if (take != null)
+            {
+                query.Take(take.Value);
+            }
+
+            return query.ToList();
+        }
+
+        public IEnumerable<Guid> GetAllOrganizationIds()
         {
             return _context.BankData
-                .Skip(skip)
-                .Take(take)
+                .Select(k => k.OrganizationId)
                 .ToList();
         }
 
@@ -42,7 +64,7 @@ namespace OpenBanking.Infra.Repository
 
         public void SaveOrUpdate(BankData obj)
         {
-            if (obj.Id == ObjectId.Empty)
+            if (GetById(obj.Id) == null)
             {
                 _context.BankData.Add(obj);
             }

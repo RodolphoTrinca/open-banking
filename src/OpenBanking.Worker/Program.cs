@@ -40,10 +40,10 @@ try
     });
 
     Log.Debug("Configuring services");
-    builder.Services.AddTransient<IBankDataRepository, BankDataRepository>();
-    builder.Services.AddTransient<IBankDataService, BankDataService>();
-    builder.Services.AddTransient<IDataProcessor, DataProcessor>();
-    builder.Services.AddTransient<IFetchDataService, FetchDataService>();
+    builder.Services.AddScoped<IBankDataRepository, BankDataRepository>();
+    builder.Services.AddScoped<IBankDataService, BankDataService>();
+    builder.Services.AddScoped<IDataProcessor, DataProcessor>();
+    builder.Services.AddScoped<IFetchDataService, FetchDataService>();
     builder.Services.AddHostedService<Worker>();
 
     builder.Services.AddSerilog();

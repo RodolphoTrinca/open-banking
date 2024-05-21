@@ -13,10 +13,10 @@ namespace OpenBanking.Tests.Controllers.Participants{
         {
             var participantsList = new List<BankData>()
             {
-                new BankDataFactory().CreateBankData(),
-                new BankDataFactory().CreateBankData(),
-                new BankDataFactory().CreateBankData(),
-                new BankDataFactory().CreateBankData()
+                new BankDataFactory().Build(),
+                new BankDataFactory().Build(),
+                new BankDataFactory().Build(),
+                new BankDataFactory().Build()
             };
 
             _participantsService.GetAll(Arg.Any<int>(), Arg.Any<int>())

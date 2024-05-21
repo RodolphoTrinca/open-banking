@@ -34,39 +34,63 @@ namespace OpenBanking.Worker.Domain
                 return;
             }
 
-            var tasks = new List<Task>();
+            var organizationIds = _service.GetAll()
+                .ToDictionary(bd => bd.OrganizationId, bd => bd);
 
             foreach (var item in data)
             {
-                var task = Task.Factory.StartNew(() => {
-                    if (!Guid.TryParse(item.OrganisationId, out var id))
-                    {
-                        _logger.LogError($"The Organisation id: {item.OrganisationId} cannot be converted to GUID");
-                        return;
-                    }
+                if (!Guid.TryParse(item.OrganisationId, out var id))
+                {
+                    _logger.LogError($"The Organisation id: {item.OrganisationId} cannot be converted to GUID");
+                    continue;
+                }
 
-                    _logger.LogDebug("Search for bank data");
-                    var bankData = _service.GetById(id);
+                _logger.LogDebug($"Search for bank data: {id}");
 
-                    if (bankData == null)
-                    {
-                        _logger.LogDebug($"Bank {item.OrganisationName} not found, saving data...");
-                        _service.SaveOrUpdate(item.ToBankData());
-                        _logger.LogInformation($"Bank {item.OrganisationName} saved with success!");
-                        return;
-                    }
+                if (!organizationIds.TryGetValue(id, out var bankData))
+                {
+                    _logger.LogDebug($"Bank {item.OrganisationName} not found, saving data...");
+                    _logger.LogDebug("Creating bank data");
+                    bankData = item.ToBankData();
 
-                    _logger.LogDebug($"Bank {item.OrganisationName} found, updating data...");
-                    bankData.UpdateData(item);
+                    _logger.LogDebug($"Saving bank data: {bankData}");
                     _service.SaveOrUpdate(bankData);
 
-                    _logger.LogInformation($"Bank {item.OrganisationName} information updated with success");
-                });
+                    _logger.LogInformation($"Bank {item.OrganisationName} saved with success!");
+                    continue;
+                }
 
-                tasks.Add(task);
+                _logger.LogDebug($"Bank {item.OrganisationName} found, updating data...");
+                bankData.UpdateData(item);
+                _service.SaveOrUpdate(bankData);
+
+                organizationIds.Remove(id);
+
+                _logger.LogInformation($"Bank {item.OrganisationName} information updated with success");
             }
 
-            Task.WaitAll(tasks.ToArray());
+            RemoveParticipants(organizationIds.Keys);
+        }
+
+        private void RemoveParticipants(IEnumerable<Guid> ids)
+        {
+            if (!ids.Any())
+            {
+                return;
+            }
+
+            _logger.LogInformation("Removing organizations that no longer participate");
+            _logger.LogDebug($"Removing {ids.Count()} organizations");
+            foreach (var item in ids)
+            {
+                var bankData = _service.GetByOrganizationId(item);
+                if (bankData == null)
+                {
+                    continue;
+                }
+
+                _service.Remove(bankData);
+            }
         }
     }
 }

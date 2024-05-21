@@ -9,10 +9,10 @@ namespace OpenBanking.API.Web.Controllers
     [Route("api/[controller]")]
     public class ParticipantsController : ControllerBase
     {
-        private readonly IParticipantsService _service;
+        private readonly IBankDataService _service;
         private readonly ILogger<ParticipantsController> _logger;
 
-        public ParticipantsController(IParticipantsService participantsService, ILogger<ParticipantsController> logger)
+        public ParticipantsController(IBankDataService participantsService, ILogger<ParticipantsController> logger)
         {
             _service = participantsService;
             _logger = logger;

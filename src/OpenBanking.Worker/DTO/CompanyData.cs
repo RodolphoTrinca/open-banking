@@ -19,7 +19,7 @@ namespace OpenBanking.Worker.DTO
                 .ToList();
 
             return new BankData { 
-                Id = Guid.Parse(OrganisationId),
+                OrganizationId = Guid.Parse(OrganisationId),
                 Status = Status,
                 Name = OrganisationName,
                 AutorizationServers = listAutorizationServers,

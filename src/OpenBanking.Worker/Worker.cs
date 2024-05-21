@@ -1,4 +1,5 @@
 using OpenBanking.Worker.FetchData;
+using System.Diagnostics;
 
 namespace OpenBanking.Worker
 {
@@ -24,26 +25,42 @@ namespace OpenBanking.Worker
             var configSleepTime = _config.GetValue<int>("CooldownTime");
             var sleepTime = configSleepTime == 0 ? 60000 : configSleepTime;
 
+            var watch = new Stopwatch();
+
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                using (IServiceScope scope = _serviceScopeFactory.CreateScope())
+                try
                 {
-                    var service = scope.ServiceProvider.GetRequiredService<IFetchDataService>();
-
-                    if (service == null)
+                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                    watch.Reset();
+                    watch.Start();
+                    using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                     {
-                        _logger.LogError($"Failed to retrive the {nameof(IFetchDataService)} service");
-                        return;
+                        var service = scope.ServiceProvider.GetRequiredService<IFetchDataService>();
+
+                        if (service == null)
+                        {
+                            _logger.LogError($"Failed to retrive the {nameof(IFetchDataService)} service");
+                            return;
+                        }
+
+                        _logger.LogInformation("Fetching data");
+                        _logger.LogDebug($"url to fetch: {url}");
+                        await service.FetchAsync(url, stoppingToken);
                     }
 
-                    _logger.LogInformation("Fetching data");
-                    _logger.LogDebug($"url to fetch: {url}");
-                    await service.FetchAsync(url, stoppingToken);
+                    watch.Stop();
+                    _logger.LogDebug($"Time to process data: {watch.ElapsedMilliseconds}ms");
+                    _logger.LogInformation($"Sleeping for: {sleepTime}ms");
                 }
-
-                _logger.LogInformation($"Sleeping for: {sleepTime}ms");
-                await Task.Delay(sleepTime, stoppingToken);
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error on execution: ");
+                }
+                finally
+                {
+                    await Task.Delay(sleepTime, stoppingToken);
+                }
             }
         }
 
