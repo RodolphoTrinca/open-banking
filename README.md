@@ -12,7 +12,7 @@ This project was made using:
 To startup project run: make startup
 
 ### UI
-- The api responses on: [http://localhost:10000/](http://localhost:10000/)
+- The ui responses on: [http://localhost:10000/](http://localhost:10000/)
 
 ### Documentation
 The docs are placed in this [location](./docs/docs.md). 
