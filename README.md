@@ -1,5 +1,5 @@
 # open-banking
-## Tecnology used
+## Technology used
 This project was made using:
 - UI: React JS
 - API: ASP.NET .NET Core 8
