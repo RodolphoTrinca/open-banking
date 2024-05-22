@@ -21,7 +21,6 @@ namespace OpenBanking.Worker
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Running Worker");
-            var url = _config["FetchURL"] ?? string.Empty;
             var configSleepTime = _config.GetValue<int>("CooldownTime");
             var sleepTime = configSleepTime == 0 ? 60000 : configSleepTime;
 
@@ -45,7 +44,6 @@ namespace OpenBanking.Worker
                         }
 
                         _logger.LogInformation("Fetching data");
-                        _logger.LogDebug($"url to fetch: {url}");
                         await service.FetchAsync(stoppingToken);
                     }
 
