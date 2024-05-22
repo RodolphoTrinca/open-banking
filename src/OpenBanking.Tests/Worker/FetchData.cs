@@ -23,7 +23,7 @@ namespace OpenBanking.Tests.Worker
             _worker = new FetchDataService(_gateway, _dataProcessor, _logger);
         }
 
-        //[Fact]
+        [Fact]
         public async Task FetchDataFromAPI()
         {
             var cancelationToken = new CancellationToken();
@@ -33,7 +33,7 @@ namespace OpenBanking.Tests.Worker
                 Arg.Is<CancellationToken>(ct => ct.Equals(cancelationToken)))
                 .Returns(x => Task.FromResult(new RestResponse()
             {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                IsSuccessStatusCode = true,
                 Content = data
             }));
 

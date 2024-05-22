@@ -19,6 +19,12 @@ namespace OpenBanking.Worker.Domain
 
         public async Task Process(string data)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                _logger.LogError("The data cannot be null or empty");
+                return;
+            }
+
             _logger.LogInformation("Processing data");
             _logger.LogDebug($"Payload received: {data}");
 
