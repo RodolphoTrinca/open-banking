@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
 using OpenBanking.Infra.Repository;
 
@@ -13,7 +12,7 @@ namespace OpenBanking.Tests.Helpers
         public BankDataRepositoryBase() : base()
         {
             _logger = Substitute.For<ILogger<BankDataRepository>>();
-            _repository = new BankDataRepository(DbContext, _logger);
+            _repository = new BankDataRepository(_context, _logger);
         }
     }
 }

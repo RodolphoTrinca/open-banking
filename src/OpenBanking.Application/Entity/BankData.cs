@@ -37,9 +37,9 @@ namespace OpenBanking.Application.Entity
         {
             return other is not null &&
                    Id.Equals(other.Id) &&
+                   OrganizationId.Equals(other.OrganizationId) &&
                    Status == other.Status &&
                    Name == other.Name &&
-                   OrganizationId.Equals(other.OrganizationId) &&
                    EqualityComparer<List<AutorizationServer>>.Default.Equals(AutorizationServers, other.AutorizationServers);
         }
 

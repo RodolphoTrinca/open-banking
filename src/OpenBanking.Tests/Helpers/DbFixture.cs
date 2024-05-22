@@ -11,7 +11,7 @@ namespace OpenBanking.Tests.Helpers
         private string _databaseName;
         private MongoClient _client;
 
-        protected OpenBankingDbContext DbContext { get; }
+        protected OpenBankingDbContext _context { get; }
 
         public DbFixture()
         {
@@ -29,7 +29,7 @@ namespace OpenBanking.Tests.Helpers
 
             var optionsBuilder = new DbContextOptionsBuilder<OpenBankingDbContext>();
             optionsBuilder.UseMongoDB(dataBase.Client, dataBase.DatabaseNamespace.DatabaseName);
-            DbContext = new OpenBankingDbContext(optionsBuilder.Options);
+            _context = new OpenBankingDbContext(optionsBuilder.Options);
         }
 
         public void Dispose()

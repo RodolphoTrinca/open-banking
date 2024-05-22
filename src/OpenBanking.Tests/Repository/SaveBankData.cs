@@ -11,7 +11,7 @@ namespace OpenBanking.Tests.Repository
 
             _repository.SaveOrUpdate(data);
 
-            Assert.NotNull(DbContext.BankData.FirstOrDefault(bd => bd.Id.Equals(data.Id)));
+            Assert.NotNull(_context.BankData.FirstOrDefault(bd => bd.Id.Equals(data.Id)));
         }
     }
 }

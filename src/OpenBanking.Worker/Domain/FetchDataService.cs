@@ -1,33 +1,24 @@
-﻿using RestSharp;
+﻿using OpenBanking.Worker.Gateway;
 
 namespace OpenBanking.Worker.FetchData
 {
     public class FetchDataService : IFetchDataService
     {
+        private readonly IOpenBankingGateway _gateway;
         private readonly IDataProcessor _dataProcessor;
         private readonly ILogger<FetchDataService> _logger;
 
-        public FetchDataService(IDataProcessor dataProcessor, ILogger<FetchDataService> logger)
+        public FetchDataService(IOpenBankingGateway gateway, IDataProcessor dataProcessor, ILogger<FetchDataService> logger)
         {
+            _gateway = gateway;
             _dataProcessor = dataProcessor;
             _logger = logger;
         }
 
-        public async Task FetchAsync(string url, CancellationToken cancellationToken)
+        public async Task FetchAsync(CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(url))
-            {
-                _logger.LogError("[Fetch Data] The url is null or empty");
-                return;
-            }
-
-            var options = new RestClientOptions(url);
-            var client = new RestClient(options);
-
-            var request = new RestRequest();
-
             _logger.LogDebug("[Fetch Data] Sending request...");
-            var response = await client.GetAsync(request, cancellationToken);
+            var response = await _gateway.GetBankDataAsync(cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {

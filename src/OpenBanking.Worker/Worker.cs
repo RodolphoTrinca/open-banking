@@ -46,7 +46,7 @@ namespace OpenBanking.Worker
 
                         _logger.LogInformation("Fetching data");
                         _logger.LogDebug($"url to fetch: {url}");
-                        await service.FetchAsync(url, stoppingToken);
+                        await service.FetchAsync(stoppingToken);
                     }
 
                     watch.Stop();

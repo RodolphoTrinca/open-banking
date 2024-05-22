@@ -1,0 +1,19 @@
+version: "3.8"
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  testdatabase:
+    image: mongo
+    restart: always
+    ports:
+     - 27017:27017
+    networks:
+      - mynetwork
+    volumes:
+      - dbdata6:/data/db
+
+volumes:
+  dbdata6:

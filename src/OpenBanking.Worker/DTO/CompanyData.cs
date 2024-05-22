@@ -1,10 +1,9 @@
 ﻿using OpenBanking.Application.Entity;
-using ThirdParty.Json.LitJson;
 
 namespace OpenBanking.Worker.DTO
 {
     [Serializable]
-    internal class CompanyData
+    public class CompanyData
     {
         public string OrganisationId { get; set; }
         public string Status { get; set; }

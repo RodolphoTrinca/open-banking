@@ -34,12 +34,12 @@ namespace OpenBanking.Infra.Repository
 
             if (skip != null)
             {
-                query.Skip(skip.Value);
+                query = query.Skip(skip.Value);
             }
 
             if (take != null)
             {
-                query.Take(take.Value);
+                query = query.Take(take.Value);
             }
 
             return query.ToList();

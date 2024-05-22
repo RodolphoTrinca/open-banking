@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenBanking.API\OpenBanking.API.csproj" />
     <ProjectReference Include="..\OpenBanking.Application\OpenBanking.Application.csproj" />
+    <ProjectReference Include="..\OpenBanking.Worker\OpenBanking.Worker.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,18 +6,24 @@ namespace OpenBanking.Tests.Services.Participants
 {
     public class GetAll : ParticipantsService
     {
-        [Theory]
-        [InlineData(0, 100)]
-        public void GetAllParticipants(int skip, int take)
+        public static IEnumerable<object[]> GetTestParameters()
         {
-            var participantsList = new List<BankData>()
-            {
-                new BankDataFactory().Build(),
-                new BankDataFactory().Build(),
-                new BankDataFactory().Build(),
-                new BankDataFactory().Build()
+            yield return new object[] {new List<BankData>()
+                {
+                    new BankDataFactory().Build(),
+                    new BankDataFactory().Build(),
+                    new BankDataFactory().Build(),
+                    new BankDataFactory().Build()
+                },
+                0,
+                100
             };
+        }
 
+        [Theory]
+        [MemberData(nameof(GetTestParameters))]
+        public void GetAllParticipants(List<BankData> participantsList, int skip, int take)
+        {
             _bankDataRepository.GetAll(skip, take)
                 .Returns(participantsList);
 

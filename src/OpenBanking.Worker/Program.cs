@@ -6,6 +6,8 @@ using OpenBanking.Infra.Repository;
 using OpenBanking.Worker;
 using OpenBanking.Worker.Domain;
 using OpenBanking.Worker.FetchData;
+using OpenBanking.Worker.Gateway;
+using RestSharp;
 using Serilog;
 
 try
@@ -44,6 +46,7 @@ try
     builder.Services.AddScoped<IBankDataService, BankDataService>();
     builder.Services.AddScoped<IDataProcessor, DataProcessor>();
     builder.Services.AddScoped<IFetchDataService, FetchDataService>();
+    builder.Services.AddScoped<IOpenBankingGateway, OpenBankingGateway>();
     builder.Services.AddHostedService<Worker>();
 
     builder.Services.AddSerilog();

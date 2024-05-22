@@ -6,7 +6,7 @@ namespace OpenBanking.Tests.Helpers
 {
     public class BankDataFactory
     {
-        private Guid _id;
+        private Guid _organizationId;
         private string _name;
         private string _status;
         private List<AutorizationServer> _autorizationServers;
@@ -20,12 +20,12 @@ namespace OpenBanking.Tests.Helpers
                 autorizationServer
             };
 
-            _id = Guid.NewGuid();
+            _organizationId = Guid.NewGuid();
         }
 
-        public BankDataFactory WithId(Guid id)
+        public BankDataFactory WithOrganizationId(Guid id)
         {
-            _id = id;
+            _organizationId = id;
             return this;
         }
 
@@ -51,7 +51,8 @@ namespace OpenBanking.Tests.Helpers
         {
             return new BankData()
             {
-                Id = _id,
+                Id = ObjectId.GenerateNewId(),
+                OrganizationId = _organizationId,
                 Name = _name,
                 Status = _status,
                 AutorizationServers = _autorizationServers
