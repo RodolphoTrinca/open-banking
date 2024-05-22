@@ -21,8 +21,6 @@ services:
     build:
       context: .
       dockerfile: OpenBanking.API/Dockerfile
-      # args:
-      #   - BUILD_CONFIGURATION=${BUILD_CONFIGURATION}
     depends_on:
       - mongo
     ports:
@@ -62,12 +60,9 @@ services:
   openbanking.worker:
     image: openbankingworker
     container_name: openbanking.worker
-    # restart: always
     build:
       context: .
       dockerfile: OpenBanking.Worker/Dockerfile
-      # args:
-      #   - BUILD_CONFIGURATION=${BUILD_CONFIGURATION}
     depends_on:
       - mongo
     networks:

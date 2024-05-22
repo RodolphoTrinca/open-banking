@@ -7,15 +7,15 @@ This project was made using:
 - NGINX
 - makefile
 
+## Documentation
+The docs are placed in this [location](./docs/docs.md). 
+
 ## How to run the project 
 ### Startup
 To startup project run: make startup
 
 ### UI
 - The ui responses on: [http://localhost:10000/](http://localhost:10000/)
-
-### Documentation
-The docs are placed in this [location](./docs/docs.md). 
 
 ### API Swagger
 - The swagger api response on [http://localhost:10000/api/index.html](http://localhost:10000/api/index.html)
